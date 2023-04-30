@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { testApi } from "../../apis/Api";
+
+// import testapi
 
 const Homepage = () => {
+  
+  useEffect(() => {
+    testApi().then((res) => {
+      console.log(res);
+    });
+  }, []);
+
   return (
     <div className="container mt-5">
       <div
@@ -34,19 +44,19 @@ const Homepage = () => {
         <div class="carousel-inner">
           <div class="carousel-item active">
             <img
-              src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(15).webp"
+              src="https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
               class="d-block w-100"
               alt="Sunset Over the City"
             />
             <div class="carousel-caption d-none d-md-block">
               <h5>Welcome to OnlineBazar</h5>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+              <p>Cloths on your choice</p>
             </div>
           </div>
 
           <div class="carousel-item">
             <img
-              src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(22).webp"
+              src="https://images.pexels.com/photos/699122/pexels-photo-699122.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
               class="d-block w-100"
               alt="Canyon at Nigh"
             />
@@ -58,7 +68,7 @@ const Homepage = () => {
 
           <div class="carousel-item">
             <img
-              src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(23).webp"
+              src="https://images.pexels.com/photos/949670/pexels-photo-949670.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
               class="d-block w-100"
               alt="Cliff Above a Stormy Sea"
             />
