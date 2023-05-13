@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { registerApi } from "../../apis/Api";
 
 const Register = () => {
   const [fname, setFname] = useState("");
@@ -36,11 +37,11 @@ const Register = () => {
     console.log(fname, lname, email, pass, pass2);
 
     try {
-      axios.post("http://localhost:5000/api/user/register", {
+      registerApi({
         fname: fname,
         lname: lname,
         email: email,
-        pass: pass,
+        password: pass,
         password2: pass2,
       }).then((res) => {
         toast.success("User registered successfully");
@@ -48,10 +49,27 @@ const Register = () => {
         console.log(err);
         toast.error("User registration failed");
       });
-      
     } catch (error) {
-      toast.error("Error in frontend");
+      toast.error("Regisration failed");
     }
+
+    // try {
+    //   axios.post("http://localhost:5000/api/user/register", {
+    //     fname: fname,
+    //     lname: lname,
+    //     email: email,
+    //     password: pass,
+    //     password2: pass2,
+    //   }).then((res) => {
+    //     toast.success("User registered successfully");
+    //   }).catch((err) => {
+    //     console.log(err);
+    //     toast.error("User registration failed");
+    //   });
+      
+    // } catch (error) {
+    //   toast.error("Error in frontend");
+    // }
   };
 
   return (

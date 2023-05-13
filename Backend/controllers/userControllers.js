@@ -38,7 +38,7 @@ router.post("/register", async (req, res) => {
       fname: fname,
       lname: lname,
       email: email,
-      passw: passwordHash,
+      password: passwordHash,
     });
 
     // save the user
@@ -46,6 +46,57 @@ router.post("/register", async (req, res) => {
     res.json("User registered successfully");
   } catch (error) {
     res.status(500).json("User registration failed");
+  }
+});
+
+
+// create a route for user login
+router.post("/login", async (req, res) => {
+  console.log(req.body);
+
+  // destructuring
+  const { email, password } = req.body;
+
+  // validation
+  if(!email || !password){
+    return res.status(400).json({msg: "Please enter all fields"});
+  }
+
+  try {
+    const user = await User.findOne({email});
+    console.log(user);
+
+    // check if user exists
+    if(!user){
+      return res.status(400).json({msg: "User does not exist"});
+    }
+
+    // check if password is correct
+    const isCorrectPassword = await bcrypt.compare(password, user.password)
+    if(!isCorrectPassword){
+      res.status(400).json({ msg: "Invalid credentials" });
+    }
+
+    // creating a token and signing it with jwt
+    const token = jwt.sign({id: user._id}, "Hello");
+
+    // send the token in a HTTP-only cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      expires: new Date(Date.now() + 24*60*60*1000) 
+    })
+
+    // SEND USER DATA
+    res.json({
+      token,
+      user,
+      msg: "User logged in successfully"
+    });
+
+
+  } catch (error) {
+    console.log(error);
   }
 });
 
