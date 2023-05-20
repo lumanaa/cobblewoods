@@ -1,7 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+
+  const navigate = useNavigate()
+  //  get user from local storage
+  const user = JSON.parse(localStorage.getItem("user"))
+  console.log(user)
+
+  // logout function
+  const logout = () =>{
+    localStorage.clear()
+    navigate("/login")
+  }
+
+
   return (
     <>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -35,11 +48,37 @@ const Navbar = () => {
             </ul>
 
             <div class="d-flex align-items-center">
-              <Link to={"/register"}>
-                <button type="button" class="btn btn-primary px-3 me-2">
-                  Register
-                </button>
-              </Link>
+              {
+                user ? (
+                  <div class="dropdown">
+                    <button
+                      class="btn btn-primary dropdown-toggle"
+                      type="button"
+                      id="dropdownMenuButton"
+                      data-mdb-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      {user.fname}
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      {
+                        user.isAdmin ? (
+                          <li><Link to={'/admin-dashboard'} class="dropdown-item">Admin Dashboard</Link></li>
+                        ) : <li><Link to={'/profile'} class="dropdown-item">Profile</Link></li>
+                      }
+                      <li><Link class="dropdown-item" onClick={logout}>Logout</Link></li>
+                    </ul>
+                  </div>
+                ) : (
+                  <>
+                    <Link to={"/register"}>
+                      <button type="button" class="btn btn-primary px-3 me-2">
+                        Register
+                      </button>
+                    </Link>
+                  </>
+                )
+              }
             </div>
           </div>
         </div>

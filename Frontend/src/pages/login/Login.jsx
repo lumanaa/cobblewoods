@@ -10,6 +10,7 @@ const Login = () => {
 
   const navigate = useNavigate()
 
+
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -33,7 +34,7 @@ const Login = () => {
         console.log(err)
         toast.error("Login failed")
       })
-      
+
     } catch (error) {
       toast.error("Login failed")
     }
