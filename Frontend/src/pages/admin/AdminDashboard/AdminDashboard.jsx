@@ -1,6 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const AdminDashboard = () => {
+    const [productImage, setProductImage] = useState(null)
+
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0]
+        const reader = new FileReader()
+
+        reader.onloadend = () => {
+            setProductImage(reader.result)
+        }
+
+        if(file){
+            reader.readAsDataURL(file)
+        }
+
+    }
+
     return (
         <>
             <div className='container mt-2'>
@@ -34,7 +50,11 @@ const AdminDashboard = () => {
                                             <textarea className='form-control' name="" id="" rows={4}></textarea>
 
                                             <label className='mt-2' htmlFor="">Product Image</label>
-                                            <input type="file" class="form-control" placeholder='Enter product image' />
+                                            <input onChange={handleImageUpload} type="file" class="form-control" placeholder='Enter product image' />
+
+                                            {
+                                                productImage && <img src={productImage} alt="" className='object-cover rounded-3 mt-2' height={'300px'} width={'100%'} />
+                                            }
 
                                         </div>
                                     </form>

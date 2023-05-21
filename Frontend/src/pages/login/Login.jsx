@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { loginApi } from '../../apis/Api'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { addUser } from '../../store/userSlice'
 
 const Login = () => {
 
@@ -9,6 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState("")
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
 
   const handleSubmit = (e) => {
@@ -22,12 +25,10 @@ const Login = () => {
       }).then((res) => {
         console.log(res.data)
 
-        // setting token and user in local storage
-        localStorage.setItem("token", res.data.token)
-        localStorage.setItem("user", JSON.stringify(res.data.user))
+        //  dispatch to store
+        dispatch(addUser(res.data.user))
 
         navigate("/")
-
         toast.success("Login success")
 
       }).catch((err) => {
@@ -40,6 +41,36 @@ const Login = () => {
     }
 
   }
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault()
+
+  //   try {
+
+  //     loginApi({
+  //       email: email,
+  //       password: password
+  //     }).then((res) => {
+  //       console.log(res.data)
+
+  //       // setting token and user in local storage
+  //       localStorage.setItem("token", res.data.token)
+  //       localStorage.setItem("user", JSON.stringify(res.data.user))
+
+  //       navigate("/")
+
+  //       toast.success("Login success")
+
+  //     }).catch((err) => {
+  //       console.log(err)
+  //       toast.error("Login failed")
+  //     })
+
+  //   } catch (error) {
+  //     toast.error("Login failed")
+  //   }
+
+  // }
 
   return (
     <div>
