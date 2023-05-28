@@ -1,20 +1,69 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { addProductApi, deleteProductApi, getAllProductsApi } from '../../../apis/Api'
+import { toast } from 'react-toastify'
+import { Link } from 'react-router-dom'
 
 const AdminDashboard = () => {
+
+    // for form data
+    const [productName, setProductName] = useState('')
+    const [productPrice, setProductPrice] = useState('')
+    const [productCategory, setProductCategory] = useState('')
+    const [productDescription, setProductDescription] = useState('')
+
+    // for response data
+    const [products, setProducts] = useState([])
+
+    // for image upload and preview
     const [productImage, setProductImage] = useState(null)
+    const [previewImage, setPreviewImage] = useState(null)
 
-    const handleImageUpload = (e) => {
-        const file = e.target.files[0]
+    const handleImageUpload = (event) => {
+        setProductImage(event.target.files[0])
+
         const reader = new FileReader()
-
-        reader.onloadend = () => {
-            setProductImage(reader.result)
+        reader.onload = () => {
+            setPreviewImage(reader.result)
         }
+        reader.readAsDataURL(event.target.files[0])
+    }
 
-        if(file){
-            reader.readAsDataURL(file)
-        }
+    const handleSubmit = () => {
+        const formData = new FormData()
+        formData.append('productName', productName)
+        formData.append('productPrice', productPrice)
+        formData.append('productCategory', productCategory)
+        formData.append('productDescription', productDescription)
+        formData.append('productImage', productImage)
 
+        // calling the api
+        addProductApi(formData).then(res => {
+            toast.success("Product added successfully")
+        }).catch(err => {
+            console.log(err)
+            toast.error("Product add failed!!")
+        })
+    }
+
+
+    useEffect(() => {
+        getAllProductsApi().then(res => {
+            setProducts(res.data)
+        }).catch(err => {
+            console.log(err)
+        })
+    }, [])
+
+    const handleDelete = (id) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this product?")
+        if (confirmDelete) {
+            deleteProductApi(id).then(res => {
+                toast.success("Product deleted successfully")
+            }).catch(err => {
+                toast.error("Product delete failed!!")
+            })
+
+        } 
     }
 
     return (
@@ -38,22 +87,30 @@ const AdminDashboard = () => {
                                         <div class="mb-3">
 
                                             <label htmlFor="">Product Name</label>
-                                            <input type="text" class="form-control" placeholder='Enter product name' />
+                                            <input
+                                                onChange={(e) => setProductName(e.target.value)}
+                                                type="text" class="form-control" placeholder='Enter product name' />
 
                                             <label className='mt-2' htmlFor="">Product Price</label>
-                                            <input type="text" class="form-control" placeholder='Enter product price' />
+                                            <input
+                                                onChange={(e) => setProductPrice(e.target.value)}
+                                                type="text" class="form-control" placeholder='Enter product price' />
 
                                             <label className='mt-2' htmlFor="">Product Category</label>
-                                            <input type="text" class="form-control" placeholder='Enter product category' />
+                                            <input
+                                                onChange={(e) => setProductCategory(e.target.value)}
+                                                type="text" class="form-control" placeholder='Enter product category' />
 
                                             <label className='mt-2' htmlFor="">Product Description</label>
-                                            <textarea className='form-control' name="" id="" rows={4}></textarea>
+                                            <textarea
+                                                onChange={(e) => setProductDescription(e.target.value)}
+                                                className='form-control' name="" id="" rows={4}></textarea>
 
                                             <label className='mt-2' htmlFor="">Product Image</label>
                                             <input onChange={handleImageUpload} type="file" class="form-control" placeholder='Enter product image' />
 
                                             {
-                                                productImage && <img src={productImage} alt="" className='object-cover rounded-3 mt-2' height={'300px'} width={'100%'} />
+                                                previewImage && <img src={previewImage} alt="" className='object-cover rounded-3 mt-2' height={'300px'} width={'100%'} />
                                             }
 
                                         </div>
@@ -61,7 +118,7 @@ const AdminDashboard = () => {
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Add</button>
+                                    <button type="button" class="btn btn-primary" onClick={handleSubmit}>Add</button>
                                 </div>
                             </div>
                         </div>
@@ -79,36 +136,30 @@ const AdminDashboard = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <img src="https://picsum.photos/200" alt="" height={40} />
-                            </td>
-                            <td>Rose</td>
-                            <td>100</td>
-                            <td>Flower</td>
-                            <td>Flower Desc</td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic example">
-                                    <button type="button" class="btn btn-success">Edit</button>
-                                    <button type="button" class="btn btn-danger">Delete</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="https://picsum.photos/200" alt="" height={40} />
-                            </td>
-                            <td>Rose</td>
-                            <td>100</td>
-                            <td>Flower</td>
-                            <td>Flower Desc</td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic example">
-                                    <button type="button" class="btn btn-success">Edit</button>
-                                    <button type="button" class="btn btn-danger">Delete</button>
-                                </div>
-                            </td>
-                        </tr>
+                        {
+
+                            products.map(product => {
+                                return (
+                                    <tr>
+                                        <td>
+                                            <img src={product.image} alt="" height={40} />
+                                        </td>
+                                        <td>{product.name}</td>
+                                        <td>{product.price}</td>
+                                        <td>{product.category}</td>
+                                        <td>{product.description}</td>
+                                        <td>
+                                            
+                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                <Link to={`/admin/product/edit/${product._id}`} type="button" class="btn btn-success">Edit</Link>
+                                                <button type="button" class="btn btn-danger" onClick={() => handleDelete(product._id)}>Delete</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        }
+
                     </tbody>
                 </table>
 

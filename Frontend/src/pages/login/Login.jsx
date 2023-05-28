@@ -14,34 +14,6 @@ const Login = () => {
   const dispatch = useDispatch()
 
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-
-    try {
-
-      loginApi({
-        email: email,
-        password: password
-      }).then((res) => {
-        console.log(res.data)
-
-        //  dispatch to store
-        dispatch(addUser(res.data.user))
-
-        navigate("/")
-        toast.success("Login success")
-
-      }).catch((err) => {
-        console.log(err)
-        toast.error("Login failed")
-      })
-
-    } catch (error) {
-      toast.error("Login failed")
-    }
-
-  }
-
   // const handleSubmit = (e) => {
   //   e.preventDefault()
 
@@ -53,12 +25,10 @@ const Login = () => {
   //     }).then((res) => {
   //       console.log(res.data)
 
-  //       // setting token and user in local storage
-  //       localStorage.setItem("token", res.data.token)
-  //       localStorage.setItem("user", JSON.stringify(res.data.user))
+  //       //  dispatch to store
+  //       dispatch(addUser(res.data.user))
 
   //       navigate("/")
-
   //       toast.success("Login success")
 
   //     }).catch((err) => {
@@ -71,6 +41,36 @@ const Login = () => {
   //   }
 
   // }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    try {
+
+      loginApi({
+        email: email,
+        password: password
+      }).then((res) => {
+        console.log(res.data)
+
+        // setting token and user in local storage
+        localStorage.setItem("token", res.data.token)
+        localStorage.setItem("user", JSON.stringify(res.data.user))
+
+        navigate("/")
+
+        toast.success("Login success")
+
+      }).catch((err) => {
+        console.log(err)
+        toast.error("Login failed")
+      })
+
+    } catch (error) {
+      toast.error("Login failed")
+    }
+
+  }
 
   return (
     <div>
