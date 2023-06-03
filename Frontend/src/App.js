@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AdminDashboard from "./pages/admin/AdminDashboard/AdminDashboard";
 import AdminProductEdit from "./pages/admin/AdminProductEdit/AdminProductEdit";
 import ProductDetails from "./pages/productDetails/ProductDetails";
+import Cart from "./pages/cart/Cart";
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/product/details/:id" element={<ProductDetails />} />
+
+          {/* cart */}
+          <Route path="/cart" element={<Cart />} />
 
 
           <Route path="/login" element={<Login />} />

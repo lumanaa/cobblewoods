@@ -132,9 +132,9 @@ const AdminProductEdit = () => {
                     />
 
                     {
-                        productImage ? (
-                            <img src={productImage} alt="product" className="img-fluid mt-2" />
-                        ) : (<img src={previewImage} alt="" className="mt-2 object-cover rounded-3" height={200} width={'100%'} />)
+                        previewImage ? (
+                            <img src={previewImage} alt="product" className="img-fluid mt-2" />
+                        ) : (<img src={productImage} alt="" className="mt-2 object-cover rounded-3" height={200} width={'100%'} />)
                     }
                 </div>
 

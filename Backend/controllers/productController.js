@@ -63,7 +63,7 @@ router.get("/get_product/:id", async (req, res) => {
 });
 
 // updating product
-router.put("/update_product/:id", authGuard, async (req, res) => {
+router.put("/update_product/:id", async (req, res) => {
     console.log(req.body);
     const { productName, productPrice, productCategory, productDescription } = req.body;
     const { productImage } = req.files;
@@ -71,30 +71,44 @@ router.put("/update_product/:id", authGuard, async (req, res) => {
         return res.status(422).json({ error: "Please add all the fields" });
     }
 
-    const uploadedImage = await cloudinary.v2.uploader.upload(
-        productImage.path,
-        {
-            folder: "onlinebazar",
-            crop: "scale"
-        },
-    );
+
 
     try {
 
-        //  update product
-        const product = await productModel.findById(req.params.id);
-        product.name = productName;
-        product.price = productPrice;
-        product.category = productCategory;
-        product.description = productDescription;
-        product.image = uploadedImage.secure_url;
-        // -----------------------
-
-        await product.save();
-
-        // --------------------
-
-        res.status(201).json({ message: "Product added successfully" });
+        if(productImage){
+            const uploadedImage = await cloudinary.v2.uploader.upload(
+                productImage.path,
+                {
+                    folder: "onlinebazar",
+                    crop: "scale"
+                },
+            );
+            
+            //  update product
+            const product = await productModel.findById(req.params.id);
+            product.name = productName;
+            product.price = productPrice;
+            product.category = productCategory;
+            product.description = productDescription;
+            product.image = uploadedImage.secure_url;
+    
+            await product.save();
+    
+            res.status(201).json({ message: "Product updated successfully" });
+        } else{
+            
+            //  update product
+            const product = await productModel.findById(req.params.id);
+            product.name = productName;
+            product.price = productPrice;
+            product.category = productCategory;
+            product.description = productDescription;
+    
+            await product.save();
+    
+            res.status(201).json({ message: "Product updated successfully" });
+        }
+       
 
     } catch (error) {
         console.log(error);

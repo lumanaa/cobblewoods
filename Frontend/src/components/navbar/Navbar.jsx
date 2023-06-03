@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
@@ -13,6 +14,11 @@ const Navbar = () => {
     localStorage.clear()
     navigate("/login")
   }
+
+  // get cart value form reducer
+  const {cart} = useSelector((state) => ({
+    cart: state.cart.cart
+  }))
 
 
   return (
@@ -46,6 +52,12 @@ const Navbar = () => {
                 </a>
               </li>
             </ul>
+
+            <Link to={'/cart'} className="m-4">
+                <i className="fa fa-shopping-cart fa-lg"></i>
+                <span className="badge rounded-pill badge-notification bg-danger">{cart.length}</span>
+            </Link>
+
 
             <div class="d-flex align-items-center">
               {
