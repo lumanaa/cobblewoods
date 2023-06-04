@@ -36,6 +36,8 @@ app.get('/', (req, res) => {
 app.use('/api/user', require('./controllers/userControllers'));
 // middleware for product controller
 app.use('/api/product', require('./controllers/productController'));
+// middleware for order controller
+app.use('/api/orders', require('./controllers/orderController'));
 
 
 // connect to database

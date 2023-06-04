@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { decreaseQuantity, increaseQuantity, removeProduct } from '../../store/cartSlice';
+import { createOrderApi } from '../../apis/Api';
+import { toast } from 'react-toastify';
 
 const Cart = () => {
     const { cart } = useSelector((state) => ({
@@ -42,6 +44,26 @@ const Cart = () => {
     };
 
     //   -----------------------------
+    // create orders
+    const handleCreateOrder = () => {
+        if(!shipingAddress){
+            alert('Please enter shiping address');
+            return;
+        }
+
+        const orderDetails = {
+            cart: cart,
+            totalAmount: totalAmount,
+            shippingAddress: shipingAddress
+        }
+        console.log(orderDetails);
+
+        createOrderApi(orderDetails).then((res) => {
+            toast.success('Order created successfully');
+        }).catch((err) => {
+            toast.error('Something went wrong');
+        })
+    };
 
     return (
         <div className="container">
@@ -107,7 +129,7 @@ const Cart = () => {
                                                 <p htmlFor="">Shipping Address</p>
                                                 <input type="text" className='form-control m-0 p-0' onChange={(e) => setShipingAddress(e.target.value)} />
 
-                                                <a href="#!" className="btn btn-primary btn-lg btn-block mt-3">Place an order</a>
+                                                <button className="btn btn-primary btn-lg btn-block mt-3" onClick={handleCreateOrder}>Place an order</button>
                                             </div>
                                         </div>
                                     </div>

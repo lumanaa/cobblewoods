@@ -10,13 +10,13 @@ const Navbar = () => {
   console.log(user)
 
   // logout function
-  const logout = () =>{
+  const logout = () => {
     localStorage.clear()
     navigate("/login")
   }
 
   // get cart value form reducer
-  const {cart} = useSelector((state) => ({
+  const { cart } = useSelector((state) => ({
     cart: state.cart.cart
   }))
 
@@ -54,8 +54,8 @@ const Navbar = () => {
             </ul>
 
             <Link to={'/cart'} className="m-4">
-                <i className="fa fa-shopping-cart fa-lg"></i>
-                <span className="badge rounded-pill badge-notification bg-danger">{cart.length}</span>
+              <i className="fa fa-shopping-cart fa-lg"></i>
+              <span className="badge rounded-pill badge-notification bg-danger">{cart.length}</span>
             </Link>
 
 
@@ -75,8 +75,15 @@ const Navbar = () => {
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                       {
                         user.isAdmin ? (
-                          <li><Link to={'/admin-dashboard'} class="dropdown-item">Admin Dashboard</Link></li>
-                        ) : <li><Link to={'/profile'} class="dropdown-item">Profile</Link></li>
+                          <>
+                            <li><Link to={'/admin-dashboard'} class="dropdown-item">Admin Dashboard</Link></li>
+                            <li><Link to={'/order'} class="dropdown-item">My Orders</Link></li>
+
+                          </>
+                        ) : <>
+                          <li><Link to={'/profile'} class="dropdown-item">Profile</Link></li>
+                          <li><Link to={'/order'} class="dropdown-item">My Orders</Link></li>
+                        </>
                       }
                       <li><Link class="dropdown-item" onClick={logout}>Logout</Link></li>
                     </ul>
