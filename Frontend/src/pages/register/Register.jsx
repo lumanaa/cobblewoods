@@ -11,6 +11,49 @@ const Register = () => {
   const [pass, setPass] = useState("");
   const [pass2, setPass2] = useState("");
 
+  // error state
+  const [fnameError, setFnameError] = useState("");
+  const [lnameError, setLnameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passError, setPassError] = useState("");
+  const [pass2Error, setPass2Error] = useState("");
+
+  const validate = () => {
+    let isValid = true;
+
+    if(fname === "") {
+      setFnameError("Firstname is required");
+      isValid = false;
+    }
+
+    if(lname === "") {
+      setLnameError("Lastname is required");
+      isValid = false;
+    }
+
+    if(email === "") {
+      setEmailError("Email is required");
+      isValid = false;
+    }
+
+    if(pass === "") {
+      setPassError("Password is required");
+      isValid = false;
+    }
+
+    if(pass2 === "") {
+      setPass2Error("Confirm password is required");
+      isValid = false;
+    }
+
+    if (pass !== pass2){
+      setPass2Error("PAssword doesnt match");
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
   const handleFname = (e) => {
     setFname(e.target.value);
   };
@@ -35,6 +78,10 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(fname, lname, email, pass, pass2);
+
+    if(!validate()) {
+      return;
+    }
 
     try {
       registerApi({
@@ -87,6 +134,9 @@ const Register = () => {
               id="name"
               className="form-control"
             />
+            {
+              fnameError && <div className="text-danger">{fnameError}</div>
+            }
           </div>
           <div className="form-group">
             <label htmlFor="lastname">Lastname</label>
@@ -97,6 +147,9 @@ const Register = () => {
               id="lastname"
               className="form-control"
             />
+            {
+              lnameError && <div className="text-danger">{lnameError}</div>
+            }
           </div>
           <div className="form-group">
             <label htmlFor="email">Email</label>
@@ -107,6 +160,9 @@ const Register = () => {
               id="email"
               className="form-control"
             />
+            {
+              emailError && <div className="text-danger">{emailError}</div>
+            }
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>
@@ -117,6 +173,9 @@ const Register = () => {
               id="password"
               className="form-control"
             />
+            {
+              passError && <div className="text-danger">{passError}</div>
+            }
           </div>
           <div className="form-group">
             <label htmlFor="password2">Confirm Password</label>
@@ -127,6 +186,9 @@ const Register = () => {
               id="password2"
               className="form-control"
             />
+            {
+              pass2Error && <div className="text-danger">{pass2Error}</div>
+            }
           </div>
           <button
             type="submit"

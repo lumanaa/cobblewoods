@@ -2,6 +2,8 @@ const router = require("express").Router();
 const cloudinary = require("cloudinary");
 const productModel = require("../models/productModel");
 const authGuard = require("../auth/auithGuard");
+const Order = require("../models/orderModel");
+const userModel = require("../models/userModel");
 
 router.post("/add", authGuard, async (req, res) => {
     console.log(req.body);
@@ -141,6 +143,22 @@ router.get("/search_product/:name", async (req, res) => {
         res.status(200).json(products);
 
 
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+
+// count products, pending orders, delivered orders, users
+router.get("/count", async (req, res) => {
+    try {
+        const productCount = await productModel.countDocuments({});
+        const pendingOrders = await Order.countDocuments({ status: "Pending" });
+        const deliveredOrders = await Order.countDocuments({ status: "Delivered" });
+        const userCount = await userModel.countDocuments({});
+        res.status(200).json({ productCount, pendingOrders, deliveredOrders, userCount });
+        
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: "Internal Server Error" });

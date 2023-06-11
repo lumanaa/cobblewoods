@@ -54,3 +54,6 @@ export const updateOrderStatusApi = (id, data) => Api.put(`/api/orders/change_st
 
 // search products
 export const searchProductsApi = (query) => Api.get(`/api/product/search_product/${query}`);
+
+// count products
+export const getCount = () => Api.get('/api/product/count');

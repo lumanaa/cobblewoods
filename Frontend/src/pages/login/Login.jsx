@@ -42,8 +42,30 @@ const Login = () => {
 
   // }
 
+  const [emailError, setEmailError] = useState("");
+  const [passError, setPassError] = useState("");
+
+  const validate = () => {
+    let isValid = true;
+
+    if (email === "") {
+      setEmailError("Email is required");
+      isValid = false;
+    }
+
+    if (password === "") {
+      setPassError("Password is required");
+      isValid = false;
+    }
+    return isValid;
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    if (!validate()) {
+      return;
+    }
 
     try {
 
@@ -86,6 +108,10 @@ const Login = () => {
                   onChange={(e) => setEmail(e.target.value)}
 
                   type="email" name="email" id="" className="form-control" />
+
+                {
+                  emailError && <div className="text-danger">{emailError}</div>
+                }
               </div>
               <div className="form-group">
                 <label htmlFor="password">Password</label>
@@ -93,6 +119,10 @@ const Login = () => {
                   onChange={(e) => setPassword(e.target.value)}
 
                   type="password" name="password" id="" className="form-control" />
+
+                {
+                  passError && <div className="text-danger">{passError}</div>
+                }
               </div>
               <button
                 onClick={handleSubmit}

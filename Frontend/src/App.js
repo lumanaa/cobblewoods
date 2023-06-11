@@ -13,6 +13,7 @@ import Cart from "./pages/cart/Cart";
 import Order from "./pages/orders/Order";
 import AdminOrders from "./pages/admin/AdminOrders/AdminOrders";
 import Search from "./pages/search/Search";
+import Profile from "./pages/profile/Profile";
 
 function App() {
   return (
@@ -44,6 +45,8 @@ function App() {
 
           {/* search */}
           <Route path="/search/:query" element={<Search />} />
+
+          <Route path='/profile' element={<Profile/>} />
 
         </Routes>
       </Router>

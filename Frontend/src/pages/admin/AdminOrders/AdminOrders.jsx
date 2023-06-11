@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getOrdersByUserApi, updateOrderStatusApi } from '../../../apis/Api'
+import { getAllOrdersApi, getOrdersByUserApi, updateOrderStatusApi } from '../../../apis/Api'
 import { toast } from 'react-toastify'
 
 const AdminOrders = () => {
@@ -7,7 +7,7 @@ const AdminOrders = () => {
     const [orders, setOrders] = useState([])
 
     useEffect(() => {
-        getOrdersByUserApi().then((res) => {
+        getAllOrdersApi().then((res) => {
             console.log(res.data)
             setOrders(res.data)
         }).catch((err) => {
