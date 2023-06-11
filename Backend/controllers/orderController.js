@@ -49,4 +49,20 @@ router.get("/get_all", async(req,res) => {
     }
 })
 
+// change order status
+router.put("/change_status/:id", async(req,res) => {
+    try {
+
+        // find the order
+        const order = await Order.findById(req.params.id);
+        order.status = req.body.status;
+        await order.save();
+        res.json("Order status changed successfully");
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({msg: error});
+    }
+})
+
 module.exports = router;

@@ -12,6 +12,7 @@ import ProductDetails from "./pages/productDetails/ProductDetails";
 import Cart from "./pages/cart/Cart";
 import Order from "./pages/orders/Order";
 import AdminOrders from "./pages/admin/AdminOrders/AdminOrders";
+import Search from "./pages/search/Search";
 
 function App() {
   return (
@@ -40,6 +41,9 @@ function App() {
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/admin/product/edit/:id" element={<AdminProductEdit />} />
           <Route path="/admin/orders" element={<AdminOrders />} />
+
+          {/* search */}
+          <Route path="/search/:query" element={<Search />} />
 
         </Routes>
       </Router>

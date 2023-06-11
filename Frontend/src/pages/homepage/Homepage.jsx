@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { getAllProductsApi, testApi } from "../../apis/Api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // import testapi
 
 const Homepage = () => {
   const [products, setProducts] = useState([])
+  const [searchQuery, setSearchQuery] = useState('')
 
+  // get all products
   useEffect(() => {
     getAllProductsApi().then(res => {
       setProducts(res.data)
@@ -15,8 +17,23 @@ const Homepage = () => {
     })
   }, [])
 
+  // instance of navigate hook
+  const navigate = useNavigate()
+
+  // navigate to search page when search button is clicked
+  const handleSearch = (e) => {
+    e.preventDefault()
+    navigate(`/search/${searchQuery}`)
+  }
+
   return (
     <div className="container mt-5">
+
+      <form action="">
+        <input onChange={(e) => setSearchQuery(e.target.value)} type="text" className="form-control mb-3" placeholder="Search products by name"/>
+        <button onClick={handleSearch} type="submit" hidden>Search</button>
+      </form>
+
       <div
         id="carouselBasicExample"
         class="carousel slide carousel-fade"
@@ -113,7 +130,7 @@ const Homepage = () => {
               return (
                 <Link to={`/product/details/${product._id}`} class="col">
                   <div class="card">
-                    <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/041.webp" class="card-img-top object-cover" alt="Hollywood Sign on The Hill" width={'100px'} height={'220px'} />
+                    <img src={product.image} class="card-img-top object-cover" alt="Hollywood Sign on The Hill" width={'100px'} height={'220px'} />
                     <div class="card-body">
                       <div className="d-flex justify-content-between">
                         <h5 class="card-title text-black">{product.name}</h5>

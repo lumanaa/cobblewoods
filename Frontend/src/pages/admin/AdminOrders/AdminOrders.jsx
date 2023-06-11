@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { getOrdersByUserApi } from '../../../apis/Api'
+import { getOrdersByUserApi, updateOrderStatusApi } from '../../../apis/Api'
+import { toast } from 'react-toastify'
 
 const AdminOrders = () => {
 
@@ -13,6 +14,20 @@ const AdminOrders = () => {
             console.log(err)
         })
     }, [])
+
+
+    const handleChangeStatus = (orderNumber, status) => {
+        console.log(orderNumber, status)
+        const orderStatus = {status}
+
+        updateOrderStatusApi(orderNumber, orderStatus).then((res) => {
+            toast.success("Order Status Updated")
+            window.location.reload()
+        }).catch((err) => {
+            console.log(err)
+            toast.error("Order Status Not Updated")
+        })
+    }
 
     return (
         <div className="container mt-3">
@@ -34,9 +49,15 @@ const AdminOrders = () => {
                                     {order.status}
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" href="#">Pendng</a></li>
-                                    <li><a class="dropdown-item" href="#">In Progress</a></li>
-                                    <li><a class="dropdown-item" href="#">Delivered</a></li>
+                                    <li><button class="dropdown-item"
+                                        onClick={() => handleChangeStatus(order._id, "Pending")}
+                                    >Pendng</button></li>
+                                    <li><button class="dropdown-item"
+                                        onClick={() => handleChangeStatus(order._id, "In Progress")}
+                                    >In Progress</button></li>
+                                    <li><button class="dropdown-item"
+                                        onClick={() => handleChangeStatus(order._id, "Delivered")}
+                                    >Delivered</button></li>
                                 </ul>
                             </div>
                         </div>

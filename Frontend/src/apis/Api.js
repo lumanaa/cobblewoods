@@ -48,3 +48,9 @@ export const getOrdersByUserApi = () => Api.get('/api/orders/get_single', config
 
 // get all orders
 export const getAllOrdersApi = () => Api.get('/api/orders/get_all');
+
+// update order status
+export const updateOrderStatusApi = (id, data) => Api.put(`/api/orders/change_status/${id}`, data, config);
+
+// search products
+export const searchProductsApi = (query) => Api.get(`/api/product/search_product/${query}`);
