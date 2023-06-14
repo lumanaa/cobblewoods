@@ -1,7 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-
+import logo from '../../images/logo.png';
+import '../../index.css';
 const Navbar = () => {
 
   const navigate = useNavigate()
@@ -23,13 +24,10 @@ const Navbar = () => {
 
   return (
     <>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
+      <nav class="nav  navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid ">
           <Link to={'/'} class="navbar-brand me-2">
-            <h3 className="text-danger fw-bold">
-              Online-
-              <span className="text-black">Bazzar</span>
-            </h3>
+            <img src={logo} alt="cobblewoods" height={"75vh"}  />
           </Link>
 
           <button

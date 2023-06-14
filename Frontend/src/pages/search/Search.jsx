@@ -36,8 +36,8 @@ const Search = () => {
 
 
     return (
-        <div className='container mt-3'>
-            <div className='d-flex justify-content-between'>
+        <div className='container '>
+            <div className='d-flex align-text-center justify-content-between'>
                 <h4>Search products</h4>
 
 

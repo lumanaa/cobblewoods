@@ -1,158 +1,141 @@
 import React, { useEffect, useState } from "react";
 import { getAllProductsApi, testApi } from "../../apis/Api";
 import { Link, useNavigate } from "react-router-dom";
+import "../../index.css";
 
 // import testapi
 
 const Homepage = () => {
-  const [products, setProducts] = useState([])
-  const [searchQuery, setSearchQuery] = useState('')
+  const [products, setProducts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // get all products
   useEffect(() => {
-    getAllProductsApi().then(res => {
-      setProducts(res.data)
-    }).catch(err => {
-      console.log(err)
-    })
-  }, [])
+    getAllProductsApi()
+      .then((res) => {
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   // instance of navigate hook
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // navigate to search page when search button is clicked
   const handleSearch = (e) => {
-    e.preventDefault()
-    navigate(`/search/${searchQuery}`)
-  }
+    e.preventDefault();
+    navigate(`/search/${searchQuery}`);
+  };
 
   return (
-    <div className="container mt-5">
-
+    <div className="container-fluid slide ">
       <form action="">
-        <input onChange={(e) => setSearchQuery(e.target.value)} type="text" className="form-control mb-3" placeholder="Search products by name"/>
-        <button onClick={handleSearch} type="submit" hidden>Search</button>
+        <input
+          onChange={(e) => setSearchQuery(e.target.value)}
+          type="text"
+          className="form-control mb-3"
+          placeholder="Search products by name"
+        />
+        <button onClick={handleSearch} type="submit" hidden>
+          Search
+        </button>
       </form>
 
-      <div
-        id="carouselBasicExample"
-        class="carousel slide carousel-fade"
-        data-mdb-ride="carousel"
-      >
-        <div class="carousel-indicators">
-          <button
-            type="button"
-            data-mdb-target="#carouselBasicExample"
-            data-mdb-slide-to="0"
-            class="active"
-            aria-current="true"
-            aria-label="Slide 1"
-          ></button>
-          <button
-            type="button"
-            data-mdb-target="#carouselBasicExample"
-            data-mdb-slide-to="1"
-            aria-label="Slide 2"
-          ></button>
-          <button
-            type="button"
-            data-mdb-target="#carouselBasicExample"
-            data-mdb-slide-to="2"
-            aria-label="Slide 3"
-          ></button>
-        </div>
+      {/* <div
+        class="bg-image"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1592321050904-8c615b8f11e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80')",
+          height: "100vh",
+        }}
+      ></div> */}
+      <section>
+        <div className="container-fluid mt-3 ">
+          <div className="flex flex-col mb-3 position-relative">
+            <div
+              className="bg-cover d-flex "
+              style={{
+                backgroundColor: "#884A39",
+                height: "100vh",
+              }}
+            >
+              <div
+                className="bg-image"
+                style={{
+                  backgroundImage:
+                    "url('https://images.unsplash.com/photo-1592321050904-8c615b8f11e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1172&q=80')",
+                  height: "100vh",
+                  width: "50%",
 
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img
-              src="https://images.pexels.com/photos/996329/pexels-photo-996329.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              class="d-block w-100"
-              alt="Sunset Over the City"
-            />
-            <div class="carousel-caption d-none d-md-block">
-              <h5>Welcome to OnlineBazar</h5>
-              <p>Cloths on your choice</p>
-            </div>
-          </div>
+                  // position: "absolute",
+                  //   top: "11 rem",
+                  //   left: "1rem"
+                }}
+              ></div>
+              <div className="quote position-absolute ">
+                <h1 className="  text-right ">where creativity meets craft</h1>
+                <h5 className="mt-5 text-center ">Settle in with us</h5>
 
-          <div class="carousel-item">
-            <img
-              src="https://images.pexels.com/photos/699122/pexels-photo-699122.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              class="d-block w-100"
-              alt="Canyon at Nigh"
-            />
-            <div class="carousel-caption d-none d-md-block">
-              <h5>Second slide label</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </div>
-
-          <div class="carousel-item">
-            <img
-              src="https://images.pexels.com/photos/949670/pexels-photo-949670.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              class="d-block w-100"
-              alt="Cliff Above a Stormy Sea"
-            />
-            <div class="carousel-caption d-none d-md-block">
-              <h5>Third slide label</h5>
-              <p>
-                Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-              </p>
+                {/* <button type="button" class="btn text-white mt-5 text-center" data-mdb-ripple-color="dark"
+        style ={{
+          backgroundColor: "#6a994e"
+        }}
+        >Light</button> */}
+                <div class="d-flex justify-content-center">
+                  <button
+                    type="button"
+                    class="btn text-white mt-2 text-center"
+                    data-mdb-ripple-color="dark"
+                    style={{
+                      backgroundColor: "#6a994e",
+                    }}
+                  >
+                    Shop
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+      </section>
 
-        <button
-          class="carousel-control-prev"
-          type="button"
-          data-mdb-target="#carouselBasicExample"
-          data-mdb-slide="prev"
-        >
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button
-          class="carousel-control-next"
-          type="button"
-          data-mdb-target="#carouselBasicExample"
-          data-mdb-slide="next"
-        >
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-
-      <div>
-        <h1 className="mt-5 mb-4">Available products</h1>
-        <div class="row row-cols-1 row-cols-md-4 g-4">
-          {
-            products.map((product) => {
-              return (
-                <Link to={`/product/details/${product._id}`} class="col">
-                  <div class="card">
-                    <img src={product.image} class="card-img-top object-cover" alt="Hollywood Sign on The Hill" width={'100px'} height={'220px'} />
-                    <div class="card-body">
-                      <div className="d-flex justify-content-between">
-                        <h5 class="card-title text-black">{product.name}</h5>
-                        <h5 class="card-title text-black">NPR.{product.price}</h5>
-                      </div>
-                      <hr />
-                      <p className="text-black">
-                        {product.description}
-                      </p>
-                      <button className="btn w-100 btn-outline-black">
-                        View more
-                      </button>
-                    </div>
+      {/* <h1 className="mt-5 mb-4 p-3 poppins">Available products</h1>
+      <div class="row row-cols-1 row-cols-md-4 g-4 p-3">
+        {products.map((product) => {
+          return (
+            <Link to={`/product/details/${product._id}`} class="col">
+              <div class="card">
+                <img
+                  src={product.image}
+                  class="card-img-top object-cover"
+                  alt="Hollywood Sign on The Hill"
+                  width={"100px"}
+                  height={"220px"}
+                />
+                <div class="card-body">
+                  <div className="d-flex justify-content-between">
+                    <h5 class="card-title text-black">{product.name}</h5>
+                    <h5 class="card-title text-black">NPR.{product.price}</h5>
                   </div>
-                </Link>
-              )
-            })
-          }
-        </div>
+                  <hr />
+                  <p className="text-black">{product.description}</p>
+                  <button className="btn w-100 btn-outline-black">
+                    View more
+                  </button>
+                </div>
+              </div>
+            </Link>
+          );
+        })}
+      </div> */}
+      <div className="mid " style={{backgroundColor:"#a68a64"}}>
+<h2 className="text-center ">We're the biggest problem solvers in furniture</h2>
+<i class="fas fa-cart-flatbed-suitcase px-5 fs-1"> </i>
+<p className="px-4">Fast and free shipping<br/>
+Every single order ships for free. No minimums, no tiers, no fine print whatsoever.</p>
       </div>
-
-
     </div>
   );
 };

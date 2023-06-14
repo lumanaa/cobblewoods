@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { addProductApi, deleteProductApi, getAllProductsApi, getCount } from '../../../apis/Api'
 import { toast } from 'react-toastify'
 import { Link } from 'react-router-dom'
+import '../../../index.css';
 
 const AdminDashboard = () => {
 
@@ -121,10 +122,10 @@ const AdminDashboard = () => {
 
     return (
         <>
-            <div className='container mt-2'>
+            <div className='container-fluid dash'>
 
-                <div className='row row-cols-1 row-cols-md-4 g-4'>
-                    <div className="col">
+                <div className='row row-cols-1 row-cols-md-4 g-4 '>
+                    <div className="col ">
                         <div class="card text-white bg-danger mb-3">
                             <div class="card-header">Total products</div>
                             <div class="card-body">

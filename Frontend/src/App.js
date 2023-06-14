@@ -14,6 +14,7 @@ import Order from "./pages/orders/Order";
 import AdminOrders from "./pages/admin/AdminOrders/AdminOrders";
 import Search from "./pages/search/Search";
 import Profile from "./pages/profile/Profile";
+import './index.css';
 
 function App() {
   return (
